@@ -39,16 +39,20 @@ embed behaves better over HTTP.
 
 `.github/workflows/deploy.yml` publishes the repository root to GitHub Pages. It runs on every
 push to the **default branch** (matched dynamically, so renaming the branch does not break it)
-and can also be run by hand from the Actions tab. The first run enables Pages itself via
-`configure-pages` with `enablement: true`, so no manual setup is needed.
+and can also be run by hand from the Actions tab.
 
-If the run fails at the "Setup Pages" step, enable it once by hand: **Settings -> Pages ->
-Source -> GitHub Actions**. Workflow write permissions must also be allowed under
-**Settings -> Actions -> General**.
+### One-time setup
 
-The published URL is https://phyusion.github.io/phyusionbio/. To serve the site from
-`phyusionbio.com` instead, add a `CNAME` file containing the domain and point the DNS records at
-GitHub Pages.
+Pages must be switched on once by a repository admin: **Settings -> Pages -> Source ->
+GitHub Actions**. The workflow asks `configure-pages` to create the site automatically
+(`enablement: true`), but the built-in `GITHUB_TOKEN` is not permitted to create a Pages site and
+fails with `Resource not accessible by integration`. Once Pages is on, that step is a no-op.
+
+After enabling, re-run the latest workflow from the Actions tab (or push any commit) to publish.
+
+The site is served at https://phyusion.github.io/phyusionbio/. To use `phyusionbio.com` instead,
+add a `CNAME` file containing the domain, set the custom domain under Settings -> Pages, and point
+the DNS records at GitHub Pages.
 
 ## Editing content
 
