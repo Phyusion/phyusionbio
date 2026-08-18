@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phyusion Bio</title>
+<meta name="description" content="Advancing innovations at the intersection of biology, technology, and AI.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<meta property="og:title" content="Phyusion Bio">
+<meta property="og:description" content="Advancing innovations at the intersection of biology, technology, and AI.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap">
+<style>
+  :root{
+    --teal-900:#0C3540; --teal-800:#10454F; --teal-700:#175A69; --teal-200:#BEE0E7; --teal-100:#E3F1F4;
+    --coral:#F77B62;
+    --font-display:'Quicksand',system-ui,sans-serif;
+    --font-body:'IBM Plex Sans',system-ui,sans-serif;
+    --font-mono:'IBM Plex Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{
+    background:#ffffff;
+    color:var(--teal-900); font-family:var(--font-body);
+    min-height:100dvh; display:flex; flex-direction:column;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--teal-700)}
+  /* faint molecular grid texture */
+  body::before{
+    content:""; position:fixed; inset:0; pointer-events:none; opacity:.04;
+    background-image:radial-gradient(rgba(23,90,105,.9) 1px, transparent 1.4px);
+    background-size:34px 34px;
+  }
+
+  main{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:48px 24px 24px; position:relative; z-index:1}
+  .logo{width:min(360px, 72vw); height:auto; margin-bottom:40px}
+
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:10px; margin-bottom:26px;
+    font-family:var(--font-mono); font-size:11px; letter-spacing:.34em; text-transform:uppercase; color:var(--teal-700);
+  }
+  .eyebrow .dot{width:7px; height:7px; border-radius:50%; background:var(--coral); box-shadow:0 0 0 0 rgba(247,123,98,.55); animation:pulse 3.2s ease-out infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(247,123,98,.5)}70%{box-shadow:0 0 0 12px rgba(247,123,98,0)}100%{box-shadow:0 0 0 0 rgba(247,123,98,0)}}
+
+  h1{
+    font-family:var(--font-display); font-weight:300; letter-spacing:.005em; line-height:1.32;
+    font-size:clamp(21px, 3.4vw, 34px); max-width:20ch; margin:0; color:var(--teal-900);
+  }
+  h1 .accent{color:var(--coral)}
+
+  .cta{margin-top:40px}
+  .cta button{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:.22em; text-transform:uppercase;
+    color:var(--teal-700); background:transparent; border:1px solid rgba(23,90,105,.28);
+    padding:13px 26px; border-radius:999px; cursor:pointer; transition:all .25s ease;
+  }
+  .cta button:hover{border-color:var(--coral); color:var(--coral)}
+
+  /* contact overlay */
+  .overlay{
+    position:fixed; inset:0; z-index:20; display:none; align-items:center; justify-content:center; padding:24px;
+    background:rgba(12,53,64,.28); backdrop-filter:blur(6px);
+  }
+  .overlay.open{display:flex}
+  .panel{
+    width:100%; max-width:460px; background:#fff; border:1px solid rgba(23,90,105,.14);
+    border-radius:18px; padding:28px 26px; text-align:left; box-shadow:0 24px 60px rgba(12,53,64,.22);
+  }
+  .panel-head{display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:18px}
+  .panel [data-tf-live]{height:460px}
+  .panel h2{font-family:var(--font-display); font-weight:500; font-size:22px; margin:0 0 6px; color:var(--teal-900)}
+  .panel p.sub{margin:0 0 22px; font-size:13.5px; color:#6E8087; line-height:1.5}
+  .field{display:flex; flex-direction:column; gap:6px; margin-bottom:16px}
+  .field label{font-family:var(--font-mono); font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--teal-700)}
+  .field input, .field textarea{
+    font-family:var(--font-body); font-size:15px; color:var(--teal-900); background:#F6F9F9;
+    border:1px solid rgba(23,90,105,.2); border-radius:10px; padding:11px 13px; outline:none; transition:border-color .2s, box-shadow .2s;
+  }
+  .field input::placeholder, .field textarea::placeholder{color:#93A4AA}
+  .field input:focus, .field textarea:focus{border-color:var(--coral); box-shadow:0 0 0 3px rgba(247,123,98,.18)}
+  .field textarea{resize:vertical; min-height:96px}
+  .row-actions{display:flex; gap:10px; align-items:center; margin-top:6px}
+  .btn-send{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:#fff;
+    background:var(--coral); border:none; padding:13px 22px; border-radius:999px; cursor:pointer; transition:filter .2s, transform .1s;
+  }
+  .btn-send:hover{filter:brightness(1.06)}
+  .btn-send:active{transform:translateY(1px)}
+  .btn-cancel{font-family:var(--font-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#6E8087; background:none; border:none; cursor:pointer}
+  .success{display:none; font-size:14.5px; color:var(--teal-700); line-height:1.55}
+  .success.show{display:block}
+
+  /* ticker */
+  footer{position:relative; z-index:1; padding:0 0 34px}
+  .ticker-label{text-align:center; font-family:var(--font-mono); font-size:10px; letter-spacing:.3em; text-transform:uppercase; color:#93A4AA; margin-bottom:16px}
+  .ticker{overflow:hidden; -webkit-mask-image:linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask-image:linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent)}
+  .track{display:flex; width:max-content; animation:scroll 38s linear infinite}
+  .track:hover{animation-play-state:paused}
+  .track span{
+    font-family:var(--font-display); font-weight:400; font-size:16px; color:#B4BFC3;
+    padding:0 34px; white-space:nowrap; display:inline-flex; align-items:center; gap:34px;
+  }
+  .track span::after{content:"•"; color:var(--coral); font-size:9px; opacity:.8}
+  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @media (prefers-reduced-motion: reduce){.track{animation:none}.eyebrow .dot{animation:none}}
+
+  .social{text-align:center; margin-top:26px}
+  .social a{font-family:var(--font-mono); font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--teal-700); text-decoration:none; border-bottom:1px solid rgba(23,90,105,.25); padding-bottom:2px; transition:color .2s, border-color .2s}
+  .social a:hover{color:var(--coral); border-color:var(--coral)}
+</style>
+</head>
+<body>
+<main>
+  <img class="logo" src="logo-teal.svg" alt="Phyusion Bio">
+  <div class="eyebrow"><span class="dot"></span> Phyusion Bio</div>
+  <h1>Advancing innovations at the intersection of biology, technology, and&nbsp;AI<span class="accent">.</span></h1>
+  <div class="cta"><button data-tf-slider="aekt7slB" data-tf-width="520" data-tf-iframe-props="title=Get in touch" type="button">Get in touch</button></div>
+</main>
+
+<footer>
+  <div class="ticker-label">Select portfolio</div>
+  <div class="ticker">
+    <div class="track" id="track"></div>
+  </div>
+  <div class="social"><a href="https://www.insights.phyusionbio.com/" target="_blank" rel="noopener">Substack</a></div>
+</footer>
+
+<script>
+  var companies = ["Owkin","Jona","Atropos Health","Cytometric Therapeutics"];
+  var track = document.getElementById('track');
+  function build(){ var html=''; for(var k=0;k<2;k++){ for(var i=0;i<companies.length;i++){ html+='<span>'+companies[i]+'</span>'; } } track.innerHTML=html; }
+  build();
+</script>
+<script src="//embed.typeform.com/next/embed.js"></script>
+</body>
+</html>
