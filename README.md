@@ -11,6 +11,7 @@ Static single-page site for Phyusion Bio, built from the Phyusion Bio design sys
 | `logo.svg` | Same wordmark in white, for dark backgrounds. |
 | `favicon.png` | Browser / apple-touch icon. |
 | `.nojekyll` | Serves files verbatim; skips GitHub's Jekyll processing. |
+| `CNAME` | Custom domain for GitHub Pages (`phyusionbio.com`). |
 
 External dependencies loaded at runtime: Google Fonts (Quicksand, IBM Plex Sans, IBM Plex Mono)
 and the Typeform embed (`embed.typeform.com`) behind the "Get in touch" button.
@@ -37,22 +38,19 @@ embed behaves better over HTTP.
 
 ## Deployment
 
-`.github/workflows/deploy.yml` publishes the repository root to GitHub Pages. It runs on every
-push to the **default branch** (matched dynamically, so renaming the branch does not break it)
-and can also be run by hand from the Actions tab.
+The site is live at <https://phyusionbio.com>, served by GitHub Pages.
 
-### One-time setup
+`.github/workflows/deploy.yml` publishes the repository root on every push to the **default
+branch** (matched dynamically, so renaming the branch does not break it) and can also be run by
+hand from the Actions tab. `CNAME` points the deployment at the custom domain; it must stay at the
+repository root so it lands in the published artifact.
 
-Pages must be switched on once by a repository admin: **Settings -> Pages -> Source ->
-GitHub Actions**. The workflow asks `configure-pages` to create the site automatically
-(`enablement: true`), but the built-in `GITHUB_TOKEN` is not permitted to create a Pages site and
-fails with `Resource not accessible by integration`. Once Pages is on, that step is a no-op.
+### If you ever recreate this repository
 
-After enabling, re-run the latest workflow from the Actions tab (or push any commit) to publish.
-
-The site is served at https://phyusion.github.io/phyusionbio/. To use `phyusionbio.com` instead,
-add a `CNAME` file containing the domain, set the custom domain under Settings -> Pages, and point
-the DNS records at GitHub Pages.
+Pages has to be switched on once by an admin under **Settings -> Pages -> Source -> GitHub
+Actions**. The workflow asks `configure-pages` to create the site itself (`enablement: true`), but
+the built-in `GITHUB_TOKEN` is not permitted to create a Pages site and fails with `Resource not
+accessible by integration`. Once Pages exists, that step is a no-op.
 
 ## Editing content
 
