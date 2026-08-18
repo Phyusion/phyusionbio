@@ -37,13 +37,18 @@ embed behaves better over HTTP.
 
 ## Deployment
 
-`.github/workflows/deploy.yml` publishes the repository root to GitHub Pages on every push to
-`main`, and can also be run manually from the Actions tab.
+`.github/workflows/deploy.yml` publishes the repository root to GitHub Pages. It runs on every
+push to the **default branch** (matched dynamically, so renaming the branch does not break it)
+and can also be run by hand from the Actions tab. The first run enables Pages itself via
+`configure-pages` with `enablement: true`, so no manual setup is needed.
 
-One-time setup: in **Settings → Pages**, set **Source** to **GitHub Actions**.
+If the run fails at the "Setup Pages" step, enable it once by hand: **Settings -> Pages ->
+Source -> GitHub Actions**. Workflow write permissions must also be allowed under
+**Settings -> Actions -> General**.
 
-To serve the site from `phyusionbio.com`, add a `CNAME` file containing the domain and point the
-DNS records at GitHub Pages.
+The published URL is https://phyusion.github.io/phyusionbio/. To serve the site from
+`phyusionbio.com` instead, add a `CNAME` file containing the domain and point the DNS records at
+GitHub Pages.
 
 ## Editing content
 
