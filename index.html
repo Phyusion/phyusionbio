@@ -18,12 +18,14 @@
   :root{
     --teal-900:#0C3540; --teal-800:#10454F; --teal-700:#175A69; --teal-200:#BEE0E7; --teal-100:#E3F1F4;
     --coral:#F77B62;
+    --ink-muted:#6E8087; --ink-faint:#93A4AA;
     --font-display:'Quicksand',system-ui,sans-serif;
     --font-body:'IBM Plex Sans',system-ui,sans-serif;
     --font-mono:'IBM Plex Mono',ui-monospace,monospace;
   }
   *{box-sizing:border-box}
-  html,body{margin:0;height:100%}
+  html{scroll-behavior:smooth}
+  html,body{margin:0}
   body{
     background:#ffffff;
     color:var(--teal-900); font-family:var(--font-body);
@@ -38,7 +40,7 @@
     background-size:34px 34px;
   }
 
-  main{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:48px 24px 24px; position:relative; z-index:1}
+  main{min-height:82dvh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:48px 24px 24px; position:relative; z-index:1}
   .logo{width:min(360px, 72vw); height:auto; margin-bottom:40px}
 
   .eyebrow{
@@ -61,43 +63,96 @@
     padding:13px 26px; border-radius:999px; cursor:pointer; transition:all .25s ease;
   }
   .cta button:hover{border-color:var(--coral); color:var(--coral)}
+  .explore{
+    margin-top:28px; font-family:var(--font-mono); font-size:10px; letter-spacing:.28em; text-transform:uppercase;
+    color:var(--ink-faint); text-decoration:none; display:inline-flex; flex-direction:column; align-items:center; gap:10px; transition:color .2s;
+  }
+  .explore::after{content:""; width:1px; height:26px; background:currentColor; opacity:.6}
+  .explore:hover{color:var(--coral)}
 
-  /* contact overlay */
+  /* ---------- convergence section ---------- */
+  .convergence{position:relative; z-index:1; padding:72px 24px 40px; max-width:1180px; width:100%; margin:0 auto}
+  .conv-head{max-width:62ch; margin:0 auto 44px; text-align:center}
+  .conv-head .eyebrow{margin-bottom:18px}
+  .conv-head h2{
+    font-family:var(--font-display); font-weight:400; font-size:clamp(22px, 2.8vw, 30px); line-height:1.3; margin:0 0 14px; color:var(--teal-900); text-wrap:balance;
+  }
+  .conv-head p{margin:0; color:var(--ink-muted); font-size:15px; line-height:1.6}
+
+  .conv-grid{display:grid; grid-template-columns:minmax(0, 1fr) minmax(0, 1fr); gap:40px 56px; align-items:start}
+  .conv-figure{position:sticky; top:24px}
+  .venn{width:100%; max-width:560px; height:auto; display:block; margin:0 auto; overflow:visible}
+
+  /* regions */
+  .region{cursor:pointer; outline:none}
+  .region use, .region path{fill:var(--teal-100); transition:fill .25s ease}
+  .region:hover use, .region:focus-visible use{fill:var(--teal-200)}
+  .region.selected use{fill:var(--coral)}
+  .region text{pointer-events:none; user-select:none; transition:fill .25s ease}
+  .region .node-label{font-family:var(--font-display); font-weight:500; font-size:22px; fill:var(--teal-900); letter-spacing:.01em}
+  .region .pair-label{font-family:var(--font-mono); font-size:8.5px; letter-spacing:.2em; text-transform:uppercase; fill:var(--teal-700); opacity:.85}
+  .region .center-label{font-family:var(--font-mono); font-size:9px; letter-spacing:.24em; text-transform:uppercase; fill:var(--teal-700)}
+  .region.selected text{fill:#fff; opacity:1}
+  .region .center-dot{fill:var(--coral); transition:fill .25s}
+  .region.selected .center-dot{fill:#fff}
+  .region:focus-visible .focus-ring{stroke:var(--coral); stroke-width:2; stroke-dasharray:4 4}
+  .focus-ring{fill:none; stroke:none; pointer-events:none}
+  .outline{fill:none; stroke:var(--teal-700); stroke-opacity:.38; stroke-width:1.1; pointer-events:none}
+
+  .pills{display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin:22px auto 0; max-width:560px}
+  .pill{
+    font-family:var(--font-mono); font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--teal-700);
+    background:transparent; border:1px solid rgba(23,90,105,.24); border-radius:999px; padding:8px 14px; cursor:pointer; transition:all .2s;
+  }
+  .pill:hover{border-color:var(--coral); color:var(--coral)}
+  .pill[aria-pressed="true"]{background:var(--coral); border-color:var(--coral); color:#fff}
+  .pill.pair{font-size:9px; padding:7px 12px; color:var(--ink-muted)}
+  .pill.pair[aria-pressed="true"]{color:#fff}
+
+  /* panel */
+  .panel-conv{min-height:520px}
+  .panel-conv .region-tag{
+    font-family:var(--font-mono); font-size:10px; letter-spacing:.3em; text-transform:uppercase; color:var(--coral); margin:0 0 14px; display:flex; align-items:center; gap:10px;
+  }
+  .panel-conv .region-tag::before{content:""; width:18px; height:1px; background:currentColor}
+  .panel-conv h3{font-family:var(--font-display); font-weight:500; font-size:clamp(24px, 2.6vw, 30px); line-height:1.25; margin:0 0 18px; color:var(--teal-900); text-wrap:balance}
+  .panel-conv .lede{font-size:16.5px; line-height:1.65; color:var(--teal-900); margin:0 0 14px; max-width:60ch}
+  .panel-conv p{font-size:15px; line-height:1.7; color:#3F5560; margin:0 0 14px; max-width:60ch}
+  .panel-conv p:last-of-type{margin-bottom:0}
+  .fade{animation:fadeup .35s ease both}
+  @keyframes fadeup{from{opacity:0; transform:translateY(6px)}to{opacity:1; transform:none}}
+
+  .refs{margin-top:30px; padding-top:22px; border-top:1px solid rgba(23,90,105,.14)}
+  .refs h4{font-family:var(--font-mono); font-size:10px; letter-spacing:.28em; text-transform:uppercase; color:var(--ink-faint); margin:0 0 12px; font-weight:500}
+  .refs + .refs{margin-top:24px; padding-top:0; border-top:0}
+  .refs ol{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px}
+  .refs li{display:grid; grid-template-columns:auto 1fr; gap:12px; align-items:baseline; font-size:13.5px; line-height:1.5}
+  .refs li::before{content:""; width:5px; height:5px; border-radius:50%; background:var(--teal-200); transform:translateY(-2px)}
+  .refs.sub li::before{background:var(--coral); opacity:.75}
+  .refs a{color:var(--teal-900); text-decoration:none; border-bottom:1px solid rgba(23,90,105,.22); transition:color .2s, border-color .2s}
+  .refs a:hover{color:var(--coral); border-color:var(--coral)}
+  .refs .meta{display:block; font-family:var(--font-mono); font-size:10.5px; letter-spacing:.06em; color:var(--ink-muted); margin-top:3px}
+  .refs .meta b{font-weight:500; color:var(--teal-700)}
+
+  @media (max-width: 860px){
+    .conv-grid{grid-template-columns:1fr; gap:28px}
+    .conv-figure{position:static}
+    .panel-conv{min-height:0}
+  }
+  @media (max-width: 560px){
+    .region .pair-label{display:none}
+    .region .node-label{font-size:26px}
+  }
+
+  /* contact overlay (unchanged) */
   .overlay{
     position:fixed; inset:0; z-index:20; display:none; align-items:center; justify-content:center; padding:24px;
     background:rgba(12,53,64,.28); backdrop-filter:blur(6px);
   }
   .overlay.open{display:flex}
-  .panel{
-    width:100%; max-width:460px; background:#fff; border:1px solid rgba(23,90,105,.14);
-    border-radius:18px; padding:28px 26px; text-align:left; box-shadow:0 24px 60px rgba(12,53,64,.22);
-  }
-  .panel-head{display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:18px}
-  .panel [data-tf-live]{height:460px}
-  .panel h2{font-family:var(--font-display); font-weight:500; font-size:22px; margin:0 0 6px; color:var(--teal-900)}
-  .panel p.sub{margin:0 0 22px; font-size:13.5px; color:#6E8087; line-height:1.5}
-  .field{display:flex; flex-direction:column; gap:6px; margin-bottom:16px}
-  .field label{font-family:var(--font-mono); font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--teal-700)}
-  .field input, .field textarea{
-    font-family:var(--font-body); font-size:15px; color:var(--teal-900); background:#F6F9F9;
-    border:1px solid rgba(23,90,105,.2); border-radius:10px; padding:11px 13px; outline:none; transition:border-color .2s, box-shadow .2s;
-  }
-  .field input::placeholder, .field textarea::placeholder{color:#93A4AA}
-  .field input:focus, .field textarea:focus{border-color:var(--coral); box-shadow:0 0 0 3px rgba(247,123,98,.18)}
-  .field textarea{resize:vertical; min-height:96px}
-  .row-actions{display:flex; gap:10px; align-items:center; margin-top:6px}
-  .btn-send{
-    font-family:var(--font-mono); font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:#fff;
-    background:var(--coral); border:none; padding:13px 22px; border-radius:999px; cursor:pointer; transition:filter .2s, transform .1s;
-  }
-  .btn-send:hover{filter:brightness(1.06)}
-  .btn-send:active{transform:translateY(1px)}
-  .btn-cancel{font-family:var(--font-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#6E8087; background:none; border:none; cursor:pointer}
-  .success{display:none; font-size:14.5px; color:var(--teal-700); line-height:1.55}
-  .success.show{display:block}
 
   /* ticker */
-  footer{position:relative; z-index:1; padding:0 0 34px}
+  footer{position:relative; z-index:1; padding:56px 0 34px}
   .ticker-label{text-align:center; font-family:var(--font-mono); font-size:10px; letter-spacing:.3em; text-transform:uppercase; color:#93A4AA; margin-bottom:16px}
   .ticker{overflow:hidden; -webkit-mask-image:linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask-image:linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent)}
   .track{display:flex; width:max-content; animation:scroll 38s linear infinite}
@@ -108,7 +163,7 @@
   }
   .track span::after{content:"•"; color:var(--coral); font-size:9px; opacity:.8}
   @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-  @media (prefers-reduced-motion: reduce){.track{animation:none}.eyebrow .dot{animation:none}}
+  @media (prefers-reduced-motion: reduce){.track{animation:none}.eyebrow .dot{animation:none}.fade{animation:none}html{scroll-behavior:auto}}
 
   .social{text-align:center; margin-top:26px}
   .social a{font-family:var(--font-mono); font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--teal-700); text-decoration:none; border-bottom:1px solid rgba(23,90,105,.25); padding-bottom:2px; transition:color .2s, border-color .2s}
@@ -121,7 +176,88 @@
   <div class="eyebrow"><span class="dot"></span> Phyusion Bio</div>
   <h1>Advancing innovations at the intersection of biology, technology, and&nbsp;AI<span class="accent">.</span></h1>
   <div class="cta"><button data-tf-slider="aekt7slB" data-tf-width="520" data-tf-iframe-props="title=Get in touch" type="button">Get in touch</button></div>
+  <a class="explore" href="#convergence">Explore the intersection</a>
 </main>
+
+<section class="convergence" id="convergence" aria-labelledby="conv-title">
+  <div class="conv-head">
+    <div class="eyebrow"><span class="dot"></span> Where we work</div>
+    <h2 id="conv-title">Three fields are converging. The life sciences are what changes.</h2>
+    <p>Select a domain to see what it contributes and the work behind it. The center is where Phyusion Bio operates.</p>
+  </div>
+
+  <div class="conv-grid">
+    <div class="conv-figure">
+      <svg class="venn" viewBox="0 0 640 600" role="group" aria-label="Venn diagram of biology, technology, and AI">
+        <defs>
+          <circle id="ca" cx="232" cy="222" r="185"/>
+          <circle id="cb" cx="408" cy="222" r="185"/>
+          <circle id="cc" cx="320" cy="374" r="185"/>
+          <clipPath id="ka"><use href="#ca"/></clipPath>
+          <clipPath id="kb"><use href="#cb"/></clipPath>
+          <mask id="not-bc" maskUnits="userSpaceOnUse" x="0" y="0" width="640" height="600"><rect width="640" height="600" fill="#fff"/><use href="#cb" fill="#000"/><use href="#cc" fill="#000"/></mask>
+          <mask id="not-ac" maskUnits="userSpaceOnUse" x="0" y="0" width="640" height="600"><rect width="640" height="600" fill="#fff"/><use href="#ca" fill="#000"/><use href="#cc" fill="#000"/></mask>
+          <mask id="not-ab" maskUnits="userSpaceOnUse" x="0" y="0" width="640" height="600"><rect width="640" height="600" fill="#fff"/><use href="#ca" fill="#000"/><use href="#cb" fill="#000"/></mask>
+          <mask id="not-a" maskUnits="userSpaceOnUse" x="0" y="0" width="640" height="600"><rect width="640" height="600" fill="#fff"/><use href="#ca" fill="#000"/></mask>
+          <mask id="not-b" maskUnits="userSpaceOnUse" x="0" y="0" width="640" height="600"><rect width="640" height="600" fill="#fff"/><use href="#cb" fill="#000"/></mask>
+          <mask id="not-c" maskUnits="userSpaceOnUse" x="0" y="0" width="640" height="600"><rect width="640" height="600" fill="#fff"/><use href="#cc" fill="#000"/></mask>
+        </defs>
+
+        <!-- single-domain regions -->
+        <g class="region" data-region="bio" role="button" tabindex="0" aria-label="Biology">
+          <use href="#ca" mask="url(#not-bc)"/>
+          <text class="node-label" x="150" y="178" text-anchor="middle">Biology</text>
+        </g>
+        <g class="region" data-region="tech" role="button" tabindex="0" aria-label="Technology">
+          <use href="#cb" mask="url(#not-ac)"/>
+          <text class="node-label" x="492" y="178" text-anchor="middle">Technology</text>
+        </g>
+        <g class="region" data-region="ai" role="button" tabindex="0" aria-label="AI">
+          <use href="#cc" mask="url(#not-ab)"/>
+          <text class="node-label" x="320" y="486" text-anchor="middle">AI</text>
+        </g>
+
+        <!-- pairwise regions -->
+        <g class="region" data-region="bio-tech" role="button" tabindex="0" aria-label="Biology and technology">
+          <g clip-path="url(#ka)"><use href="#cb" mask="url(#not-c)"/></g>
+          <text class="pair-label" x="320" y="128" text-anchor="middle">Real-world evidence</text>
+        </g>
+        <g class="region" data-region="bio-ai" role="button" tabindex="0" aria-label="Biology and AI">
+          <g clip-path="url(#ka)"><use href="#cc" mask="url(#not-b)"/></g>
+          <text class="pair-label" x="204" y="356" text-anchor="middle">Computable biology</text>
+        </g>
+        <g class="region" data-region="tech-ai" role="button" tabindex="0" aria-label="Technology and AI">
+          <g clip-path="url(#kb)"><use href="#cc" mask="url(#not-a)"/></g>
+          <text class="pair-label" x="436" y="356" text-anchor="middle">Learning systems</text>
+        </g>
+
+        <!-- center -->
+        <g class="region selected" data-region="core" role="button" tabindex="0" aria-label="Convergence">
+          <g clip-path="url(#ka)"><g clip-path="url(#kb)"><use href="#cc"/></g></g>
+          <circle class="center-dot" cx="320" cy="262" r="4"/>
+          <text class="center-label" x="320" y="290" text-anchor="middle">Convergence</text>
+        </g>
+
+        <!-- outlines on top -->
+        <use class="outline" href="#ca"/>
+        <use class="outline" href="#cb"/>
+        <use class="outline" href="#cc"/>
+      </svg>
+
+      <div class="pills" role="tablist" aria-label="Choose a region">
+        <button class="pill" data-region="bio" aria-pressed="false" type="button">Biology</button>
+        <button class="pill" data-region="tech" aria-pressed="false" type="button">Technology</button>
+        <button class="pill" data-region="ai" aria-pressed="false" type="button">AI</button>
+        <button class="pill" data-region="core" aria-pressed="true" type="button">Convergence</button>
+        <button class="pill pair" data-region="bio-tech" aria-pressed="false" type="button">Bio + Tech</button>
+        <button class="pill pair" data-region="bio-ai" aria-pressed="false" type="button">Bio + AI</button>
+        <button class="pill pair" data-region="tech-ai" aria-pressed="false" type="button">Tech + AI</button>
+      </div>
+    </div>
+
+    <div class="panel-conv" id="panel" aria-live="polite"></div>
+  </div>
+</section>
 
 <footer>
   <div class="ticker-label">Select portfolio</div>
@@ -136,6 +272,176 @@
   var track = document.getElementById('track');
   function build(){ var html=''; for(var k=0;k<2;k++){ for(var i=0;i<companies.length;i++){ html+='<span>'+companies[i]+'</span>'; } } track.innerHTML=html; }
   build();
+
+  /* ---------- convergence content ---------- */
+  var SUB = "https://www.insights.phyusionbio.com/p/";
+  var REGIONS = {
+    bio: {
+      tag: "Biology",
+      title: "The substrate. Disease begins at the molecular level, and so does every cure.",
+      lede: "The last two decades showed how fast a mechanistic insight can become a medicine: EGFR and ALK inhibitors, checkpoint immunotherapy, drugs aimed at targets no one could see a generation ago.",
+      body: [
+        "But biology is stubbornly heterogeneous. Tumors in different organs share molecular features while tumors in the same organ diverge. Animal models predict human toxicity poorly. Trial populations rarely resemble the patients treated in clinic, and the endpoints we measure do not always capture what a patient experiences.",
+        "Our work here has focused on the biology of response and resistance, on endpoints that reflect clinical benefit, and on closing the gap between the trial and the patient."
+      ],
+      papers: [
+        {t:"Osimertinib for the treatment of metastatic EGFR T790M mutation-positive non-small cell lung cancer", a:"Khozin S, Weinstock C, Blumenthal GM, et al.", j:"Clinical Cancer Research", y:2016, d:"10.1158/1078-0432.CCR-16-1773"},
+        {t:"Benefit-risk summary of nivolumab for patients with metastatic squamous cell lung cancer after platinum-based chemotherapy", a:"Kazandjian D, Khozin S, Blumenthal G, et al.", j:"JAMA Oncology", y:2016, d:"10.1001/jamaoncol.2015.3934"},
+        {t:"Pre-clinical animal models are poor predictors of human toxicities in phase 1 oncology clinical trials", a:"Atkins JT, George GC, Hess K, ... Khozin S, et al.", j:"British Journal of Cancer", y:2020, d:"10.1038/s41416-020-01033-x"},
+        {t:"A novel approach to reducing disparities in health outcomes by enhancing interpretation of cancer clinical trials for underrepresented patient groups", a:"Khozin S, Stein RM.", j:"BBA Reviews on Cancer", y:2022, d:"10.1016/j.bbcan.2022.188825"},
+        {t:"Clinically meaningful, patient-centered endpoints for real-world evidence generation in breast cancer: perspectives from the multidisciplinary TRIUMPH initiative", a:"Khozin S, Dreyer NA, Galante D, et al.", j:"Advances in Therapy", y:2026, d:"10.1007/s12325-026-03537-z"}
+      ],
+      posts: [
+        {t:"The Discipline of Precision", s:"On Brian Druker, targets, mechanisms, and testing unfashionable ideas in humans", u:"the-discipline-of-precision"},
+        {t:"You Can't Win Alone", s:"With James Gulley on cancer immunotherapy and where intelligence fits in its future", u:"you-cant-win-alone"},
+        {t:"Beyond Gold Standards: Sins of Omission and Sins of Commission", s:"There are no gold standards in biomedicine, only methods that reached institutional consensus", u:"beyond-gold-standards-sins-of-omission"}
+      ]
+    },
+    tech: {
+      tag: "Technology",
+      title: "The instrument. Biology is now observed continuously, at resolutions that did not exist a decade ago.",
+      lede: "Electronic health records, genomic assays, imaging, wearables, and biometric sensors capture biological state at higher temporal resolution and through more modalities than at any point in history.",
+      body: [
+        "The constraint is no longer measurement. It is infrastructure: data that cannot move, cannot be linked, and cannot be reused. Institutions still handle information the way they did when a chart was made of paper.",
+        "Our work here has been on the plumbing: real-world data as a legitimate source of clinical evidence, digital submissions and “smart data” at the FDA, consensus data elements for genomic repositories, and open-access data sharing."
+      ],
+      papers: [
+        {t:"Real-world data for clinical evidence generation in oncology", a:"Khozin S, Blumenthal GM, Pazdur R.", j:"Journal of the National Cancer Institute", y:2017, d:"10.1093/jnci/djx187"},
+        {t:"From big data to smart data: FDA’s INFORMED initiative", a:"Khozin S, Kim G, Pazdur R.", j:"Nature Reviews Drug Discovery", y:2017, d:"10.1038/nrd.2017.26"},
+        {t:"Biometric monitoring devices for assessing end points in clinical trials: developing an ecosystem", a:"Arnerić SP, Cedarbaum JM, Khozin S, et al.", j:"Nature Reviews Drug Discovery", y:2017, d:"10.1038/nrd.2017.153"},
+        {t:"Core clinical data elements for cancer genomic repositories: a multi-stakeholder consensus", a:"Conley RB, Dickson D, Zenklusen JC, ... Khozin S, et al.", j:"Cell", y:2017, d:"10.1016/j.cell.2017.10.032"},
+        {t:"Advantages of a truly open-access data-sharing model", a:"Bertagnolli MM, Sartor O, Chabner BA, Rothenberg ML, Khozin S, et al.", j:"New England Journal of Medicine", y:2017, d:"10.1056/NEJMsb1702054"}
+      ],
+      posts: [
+        {t:"When the Rails Couldn’t Carry the Future", s:"Infrastructure built for a world that no longer exists, and what the railroads teach biomedicine", u:"when-the-rails-couldnt-carry-the"},
+        {t:"What Are We Spending Our Money On?", s:"Storage costs, reimbursement, and capital budgets that keep AI out of clinical care", u:"what-are-we-spending-our-money-on"},
+        {t:"Everything is Changing Everywhere", s:"With Daniel Arbess on why healthcare needs institutional, not just scientific, innovation", u:"everything-is-changing-everywhere"}
+      ]
+    },
+    ai: {
+      tag: "AI",
+      title: "The lens. Models that see disease by its features rather than by its address.",
+      lede: "Machine learning already matches clinicians on narrow diagnostic tasks in radiology and pathology, and large language models are beginning to reason over the full clinical record.",
+      body: [
+        "The more important shift is conceptual. AI lets us classify disease by computable features instead of organ and histology, and it gives science a way to regain abstraction: compressing high-dimensional observation into new hypotheses rather than only faster analysis.",
+        "It also raises the bar for rigor. A field flooded with superficial work needs a clearer separation of signal from noise, and honest accounting of what has and has not been validated in patients."
+      ],
+      papers: [
+        {t:"From organs to algorithms: redefining cancer classification in the age of artificial intelligence", a:"Khozin S.", j:"Clinical and Translational Science", y:2024, d:"10.1111/cts.70001"},
+        {t:"The use of artificial intelligence for cancer therapeutic decision-making", a:"Elemento O, Khozin S, Sternberg CN.", j:"NEJM AI", y:2025, d:"10.1056/aira2401164"}
+      ],
+      posts: [
+        {t:"AI and the Reclamation of Scientific Abstraction", s:"Using AI to generate new scientific abstractions, not just to accelerate analysis", u:"ai-and-the-reclamation-of-scientific"},
+        {t:"Signal and Noise in Modern AI Research", s:"Genuine innovation shifts how we think about problems; much of the literature does not", u:"signal-and-noise-in-modern-ai-research"},
+        {t:"The Last Interview", s:"A conversation with a model before its retirement, and what attachment to a model reveals", u:"the-last-interview"}
+      ]
+    },
+    "bio-tech": {
+      tag: "Biology + Technology",
+      title: "Real-world evidence. Biology measured where care actually happens.",
+      lede: "When measurement technology meets clinical biology, the clinic becomes a source of evidence rather than only a destination for it.",
+      body: [
+        "Real-world endpoints for tumor progression, the outcomes of immunotherapy during its first year of adoption, and the effect of broadening trial eligibility all came from routinely collected data. Each showed where the trial and the patient diverge, and each raised the standard for what counts as adequate and well-controlled."
+      ],
+      papers: [
+        {t:"Characteristics of real-world metastatic non-small cell lung cancer patients treated with nivolumab and pembrolizumab during the year following approval", a:"Khozin S, Abernethy AP, Nussbaum NC, et al.", j:"The Oncologist", y:2018, d:"10.1634/theoncologist.2017-0353"},
+        {t:"Real-world progression, treatment, and survival outcomes during rapid adoption of immunotherapy for advanced non-small cell lung cancer", a:"Khozin S, Miksad RA, Adami J, et al.", j:"Cancer", y:2019, d:"10.1002/cncr.32383"},
+        {t:"Characterizing the feasibility and performance of real-world tumor progression end points and their association with overall survival", a:"Griffith SD, Miksad RA, Calkins G, ... Khozin S, et al.", j:"JCO Clinical Cancer Informatics", y:2019, d:"10.1200/CCI.19.00013"},
+        {t:"Impact of broadening trial eligibility criteria for patients with advanced non-small cell lung cancer: real-world analysis of select ASCO recommendations", a:"Harvey RD, Bruinooge SS, Chen L, ... Khozin S, et al.", j:"Clinical Cancer Research", y:2021, d:"10.1158/1078-0432.CCR-20-3857"}
+      ],
+      posts: [
+        {t:"From Breakthrough to Breakdown: The $900 Million FDA Rejection Letter", s:"What the RP1 decision says about “adequate and well-controlled” in a real-world era", u:"from-breakthrough-to-breakdown-the"}
+      ]
+    },
+    "bio-ai": {
+      tag: "Biology + AI",
+      title: "Computable biology. Disease as a trajectory a model can learn.",
+      lede: "Once biology is expressed as data, its course can be modeled: response, progression, and survival predicted from routinely collected features, and images read at scale.",
+      body: [
+        "The open question is not whether these models work in a study but why so few reach the clinic. Validation in patients, not benchmarks, is the bridge between the two domains."
+      ],
+      papers: [
+        {t:"Machine-learning and stochastic tumor growth models for predicting outcomes in patients with advanced non-small-cell lung cancer", a:"Siah KW, Khozin S, Wong CH, Lo AW.", j:"JCO Clinical Cancer Informatics", y:2019, d:"10.1200/CCI.19.00046"},
+        {t:"Real-world imaging data: opportunities and challenges", a:"Wu J, de Araujo AL, Khozin S, et al.", j:"JMIR Medical Informatics", y:2026, d:"10.2196/88202"}
+      ],
+      posts: [
+        {t:"The Signals Beneath the Noise", s:"With Olivier Elemento and Cora Sternberg on why medical AI performs in studies and stalls in practice", u:"the-signals-beneath-the-noise"}
+      ]
+    },
+    "tech-ai": {
+      tag: "Technology + AI",
+      title: "Learning systems. Models are only as good as the highway that feeds them.",
+      lede: "AI cannot learn from data that cannot move. Data fluidity, equity of access, and the design of the systems around a model decide what the model can become.",
+      body: [
+        "Much of the signal in biomedical data is lost before a model ever sees it, compressed away by labels, schemas, and averages. Building infrastructure that preserves individual trajectories is the technical precondition for AI that matters clinically."
+      ],
+      papers: [
+        {t:"A digital highway for data fluidity and data equity in precision medicine", a:"Chin L, Khozin S.", j:"BBA Reviews on Cancer", y:2021, d:"10.1016/j.bbcan.2021.188575"}
+      ],
+      posts: [
+        {t:"The Signal We Keep Compressing Away", s:"On harness optimization, and why collapsing heterogeneous trajectories into one distribution erases meaning", u:"the-signal-we-keep-compressing-away"}
+      ]
+    },
+    core: {
+      tag: "Convergence",
+      title: "Where the three overlap, the unit of evidence changes.",
+      lede: "Biology supplies the questions and the ground truth. Technology makes biology continuously measurable at the level of the individual. AI turns those measurements into models that can be interrogated, updated, and acted on.",
+      body: [
+        "Together they make the life sciences behave less like a sequence of one-off experiments and more like a learning system: trials that borrow strength from external data without giving up randomization, evidence generated at the point of care and not only in the trial, disease classified by mechanism instead of anatomy, and therapies matched to an individual rather than a population average.",
+        "This is where Phyusion Bio works. Not at any single node, but in the operating system that connects them."
+      ],
+      papers: [
+        {t:"Real-world evidence in support of precision medicine: clinico-genomic cancer data as a case study", a:"Agarwala V, Khozin S, Singal G, et al.", j:"Health Affairs", y:2018, d:"10.1377/hlthaff.2017.1579"},
+        {t:"Status update on data required to build a learning health system", a:"Bertagnolli MM, Anderson B, Norsworthy K, ... Khozin S.", j:"Journal of Clinical Oncology", y:2020, d:"10.1200/JCO.19.03094"},
+        {t:"The design and evaluation of hybrid controlled trials that leverage external data and randomization", a:"Ventz S, Khozin S, Louv B, et al.", j:"Nature Communications", y:2022, d:"10.1038/s41467-022-33192-1"},
+        {t:"Unleashing the power of clinical trial data: a proposal for enhancing informed consent and data sharing", a:"Trippa L, Khozin S.", j:"The Oncologist", y:2024, d:"10.1093/oncolo/oyae138"}
+      ],
+      posts: [
+        {t:"Everything is a Signal", s:"The future arrives as a collection of weak signals most people overlook", u:"everything-is-a-signal"},
+        {t:"Ideas That Refuse to Die", s:"With Peter Kolchinsky on the people and systems that decide whether an idea becomes a medicine", u:"ideas-that-refuse-to-die"},
+        {t:"Precision Signals", s:"A conversation series built on the premise that progress happens when silos dissolve", u:"precision-signals-episode-2-michelle"}
+      ]
+    }
+  };
+
+  var panel = document.getElementById('panel');
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function render(key){
+    var r = REGIONS[key]; if(!r) return;
+    var h = '<div class="fade">';
+    h += '<p class="region-tag">'+esc(r.tag)+'</p>';
+    h += '<h3>'+esc(r.title)+'</h3>';
+    h += '<p class="lede">'+esc(r.lede)+'</p>';
+    for(var i=0;i<r.body.length;i++){ h += '<p>'+esc(r.body[i])+'</p>'; }
+    if(r.papers && r.papers.length){
+      h += '<div class="refs"><h4>Peer-reviewed</h4><ol>';
+      for(var p=0;p<r.papers.length;p++){ var q=r.papers[p];
+        h += '<li><span><a href="https://doi.org/'+esc(q.d)+'" target="_blank" rel="noopener">'+esc(q.t)+'</a><span class="meta">'+esc(q.a)+' <b>'+esc(q.j)+'</b> '+q.y+'</span></span></li>';
+      }
+      h += '</ol></div>';
+    }
+    if(r.posts && r.posts.length){
+      h += '<div class="refs sub"><h4>From the Substack</h4><ol>';
+      for(var s=0;s<r.posts.length;s++){ var w=r.posts[s];
+        h += '<li><span><a href="'+SUB+esc(w.u)+'" target="_blank" rel="noopener">'+esc(w.t)+'</a><span class="meta">'+esc(w.s)+'</span></span></li>';
+      }
+      h += '</ol></div>';
+    }
+    h += '</div>';
+    panel.innerHTML = h;
+  }
+  function select(key){
+    var regions = document.querySelectorAll('.region');
+    for(var i=0;i<regions.length;i++){ regions[i].classList.toggle('selected', regions[i].getAttribute('data-region')===key); }
+    var pills = document.querySelectorAll('.pill');
+    for(var j=0;j<pills.length;j++){ pills[j].setAttribute('aria-pressed', pills[j].getAttribute('data-region')===key ? 'true' : 'false'); }
+    render(key);
+  }
+  document.querySelectorAll('.region, .pill').forEach(function(el){
+    el.addEventListener('click', function(){ select(el.getAttribute('data-region')); });
+    el.addEventListener('keydown', function(e){ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); select(el.getAttribute('data-region')); } });
+  });
+  select('core');
 </script>
 <script src="//embed.typeform.com/next/embed.js"></script>
 </body>
