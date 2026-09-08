@@ -56,4 +56,7 @@ accessible by integration`. Once Pages exists, that step is a no-op.
 
 - **Headline** — the `<h1>` in `index.html`.
 - **Portfolio ticker** — the `companies` array in the inline script at the bottom of the file.
+- **Convergence diagram** — the `REGIONS` object in the same script. Each key (`bio`, `tech`, `ai`,
+  `bio-tech`, `bio-ai`, `tech-ai`, `core`) holds the region's copy plus its `papers` (linked by DOI) and
+  `posts` (Substack slugs appended to `insights.phyusionbio.com/p/`).
 - **Contact form** — the `data-tf-slider` ID on the CTA button (currently `aekt7slB`).
