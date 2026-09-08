@@ -10,6 +10,8 @@ Static single-page site for Phyusion Bio, built from the Phyusion Bio design sys
 | `logo-teal.svg` | Wordmark in teal (`#175A69`) — used on the white page background. |
 | `logo.svg` | Same wordmark in white, for dark backgrounds. |
 | `favicon.png` | Browser / apple-touch icon. |
+| `og-image.png` | 1200x630 social-share card referenced by the Open Graph and Twitter tags. |
+| `robots.txt`, `sitemap.xml` | Crawler directives and the single-URL sitemap. |
 | `.nojekyll` | Serves files verbatim; skips GitHub's Jekyll processing. |
 | `CNAME` | Custom domain for GitHub Pages (`phyusionbio.com`). |
 
